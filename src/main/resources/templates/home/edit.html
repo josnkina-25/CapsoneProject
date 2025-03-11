@@ -1,0 +1,122 @@
+<!-- home/edit.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Group Home - IDD Client Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      color: #884288;
+      margin-bottom: 15px;
+    }
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    nav a {
+      color: #884288;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: none;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #884288;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #884288;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #884288;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Edit Group Home</h1>
+    <nav>
+      <a th:href="@{/homes}">Back to Home List</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <form th:action="@{/homes/edit/{id}(id=${home.id})}" th:object="${home}" method="post">
+      <div class="form-group">
+        <label for="name">Home Name:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" th:field="*{address}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" th:field="*{capacity}" required min="1" max="20">
+      </div>
+
+      <button type="submit" class="btn">Update Group Home</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Client - IDD Client Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    nav a {
+      color: #884288;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #884288;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #884288;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #884288;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Add New Client</h1>
+    <nav>
+      <a th:href="@{/clients}">Back to Client List</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <form th:action="@{/clients/add}" th:object="${client}" method="post">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" th:field="*{firstName}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" th:field="*{lastName}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="medicalHistory">Medical History:</label>
+        <textarea id="medicalHistory" th:field="*{medicalHistory}" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="groupHome">Group Home:</label>
+        <select id="groupHome" th:field="*{groupHome}">
+          <option value="">-- Select Group Home --</option>
+          <option th:each="home : ${groupHomes}"
+                  th:value="${home.id}"
+                  th:text="${home.name}"></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="assignedCaretaker">Assigned Caretaker:</label>
+        <select id="assignedCaretaker" th:field="*{assignedCaretaker}">
+          <option value="">-- Select Caretaker --</option>
+          <option th:each="caretaker : ${caretakers}"
+                  th:value="${caretaker.id}"
+                  th:text="${caretaker.firstName + ' ' + caretaker.lastName}"></option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn">Save Client</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

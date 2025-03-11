@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client List - IDD Management</title>
+  <style>
+    /* Simple, clean styling */
+    body {
+      font-family: Arial, sans-serif;
+      color: #333333;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dddddd;
+    }
+
+    h1 {
+      color: #884288;
+      margin: 0;
+    }
+
+    /* Navigation links */
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    a {
+      color: #884288;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Buttons */
+    .button {
+      background-color: #884288;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .button:hover {
+      background-color: #884288;
+      text-decoration: none;
+    }
+
+    .button-small {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    .button-red {
+      background-color: #5d5a5a;
+    }
+
+    .button-red:hover {
+      background-color: #5d5a5a;
+    }
+
+    /* Table styles */
+    .content-box {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      padding: 12px 15px;
+      text-align: left;
+      font-weight: bold;
+      border-bottom: 2px solid #dddddd;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #dddddd;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Header with title and navigation -->
+  <div class="header">
+    <h1>Client List</h1>
+    <div class="nav-links">
+      <a th:href="@{/}" class="button">Home</a>
+      <a th:href="@{/clients/add}" class="button">Add New Client</a>
+    </div>
+  </div>
+
+  <!-- Main content box -->
+  <div class="content-box">
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Medical History</th>
+        <th>Group Home</th>
+        <th>Assigned DSP</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="client : ${clients}">
+        <td th:text="${client.firstName + ' ' + client.lastName}"></td>
+        <td th:text="${#temporals.format(client.dateOfBirth, 'MM/dd/yyyy')}"></td>
+        <td class="truncate" th:text="${client.medicalHistory != null ? client.medicalHistory : '-'}"></td>
+        <td th:text="${client.groupHome != null ? client.groupHome.name : '-'}"></td>
+        <td th:text="${client.assignedCaretaker != null ? (client.assignedCaretaker.firstName + ' ' + client.assignedCaretaker.lastName) : '-'}"></td>
+        <td>
+        <td>
+          <a th:href="@{/clients/edit/{id}(id=${client.id})}" class="button button-small">Edit</a>
+          <a th:href="@{/clients/delete/{id}(id=${client.id})}" class="button button-small button-red"
+             onclick="return confirm('Are you sure you want to delete this client? This action cannot be undone.')">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
