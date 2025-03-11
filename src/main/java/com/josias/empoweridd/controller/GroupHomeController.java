@@ -38,7 +38,6 @@ public class GroupHomeController {
     }
     @PostMapping("/edit/{id}")
     public String updateHome(@PathVariable Long id, @ModelAttribute GroupHome home) {
-        // Use update method with map pattern
         groupHomeService.updateGroupHome(home, id);
         return "redirect:/homes";
     }

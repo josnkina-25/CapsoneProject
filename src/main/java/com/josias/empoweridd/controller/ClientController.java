@@ -53,7 +53,6 @@ public class ClientController {
             Client client = clientOpt.get();
             logger.info("Found client with ID:{}", id);
             model.addAttribute("client", client);
-//            model.addAttribute("client", clientOpt.get()); // Unwrap the Optional
             model.addAttribute("groupHomes", groupHomeService.getAllGroupHomes());
             model.addAttribute("caretakers", careTakerService.getAllCaretakers());
             return "client/edit";
@@ -70,15 +69,13 @@ public class ClientController {
             client.setId(id);
             logger.info("Client ID was null, set to: {}", id);
         }
+
         try {
             Client updatedClient = clientService.updateClient(client,id);
             logger.info("Updated client with ID:{}", updatedClient);
             return "redirect:/clients";
-//            clientService.updateClient(client, id);
-//            return "redirect:/clients";
-//        } catch (RuntimeException e) {
-//            return "redirect:/clients";
-        }catch (Exception e){
+
+            }catch (Exception e){
             logger.error("Error updating client with ID:{}", id, e);
             return "redirect:/clients";
         }
